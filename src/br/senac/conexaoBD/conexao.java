@@ -14,9 +14,9 @@ public class conexao {
     public static Connection Conector(){
         Connection conexao = null;
         String driver = "com.mysql.cj.jdbc.Driver"; // conexao direto com site jdbc, site ao contrario 
-        String url = "jdbc:mysql://localhost:3306/senac"; //banco de dados
-        String user = "root"; 
-        String password = "123qwe@";
+        String url = "jdbc:mysql://localhost:3306/senac?characterEncoding=utf-8"; //banco de dados
+        String user = "admin"; 
+        String password = "admin";
         
         try{
             Class.forName(driver); // pega a informação do conector direto no site

@@ -9,7 +9,7 @@ import br.senac.conexaoBD.conexao;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
-import lista.lista;
+
 /**
  *
  * @author anapc
@@ -27,7 +27,7 @@ public class frm_CadastroContatos extends javax.swing.JFrame {
 
 	
 
-    public frm_CadastroContatos(lista listaSexo) {
+    public frm_CadastroContatos() {
         initComponents();
           con = conexao.Conector();
 
@@ -37,21 +37,21 @@ public class frm_CadastroContatos extends javax.swing.JFrame {
 
     
      private void adicionar() {
-        String sql = "insert into contatos(nome_contato, telefone, email, sexo, endereco, bairro, cidade, CEP, UF) values (?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into contatos(nome_contato, telefone_contato, email_contato, sexo, endereco, bairro, cidade, CEP, UF) values (?,?,?,?,?,?,?,?,?)";
 
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, txtNome.getText());
             ps.setString(2, txtTelefone.getText());
             ps.setString(3, txtEmail.getText());
-             ps.setString(4, txtEndereco.getText());
-              ps.setString(5, txtBairro.getText());
-               ps.setString(6, txtCidade.getText());
-               ps.setString(7, txtCEP.getText());
-            ps.setString(8, cmbSexo.getSelectedItem());
-            ps.setString(9, cmbUF.getSelectedItem());
+             ps.setString(4, cmbSexo.getSelectedItem().toString());
+             ps.setString(5, txtEndereco.getText());
+              ps.setString(6, txtBairro.getText());
+               ps.setString(7, txtCidade.getText());
+               ps.setString(8, txtCEP.getText());
+            ps.setString(9, cmbUF.getSelectedItem().toString());
 
-            if (txtNome.getText().isEmpty() || txtTelefone.getText().isEmpty() ||  txtEmail.getText().isEmpty() || txtEndereco.getText().isEmpty() || txtBairro.getText().isEmpty() || txtCidade.getText().isEmpty() || txtCEP.getText().isEmpty() ) {
+            if (txtNome.getText().isEmpty() || txtTelefone.getText().isEmpty() ||  txtEmail.getText().isEmpty() ) {
                 JOptionPane.showMessageDialog(null, "*Campos Obrigatórios!");
 
             } else {
@@ -69,44 +69,23 @@ public class frm_CadastroContatos extends javax.swing.JFrame {
 
     
 
-    private void carregaCampos() {
 
-        int carregar = tbContatos.getSelectedRow();
-        txtID.setText(tbContatos.getModel().getValueAt(carregar, 0).toString());
-        txtNome.setText(tbContatos.getModel().getValueAt(carregar, 1).toString());
-        txtTelefone.setText(tbContatos.getModel().getValueAt(carregar, 2).toString());
-        txtEmail.setText(tbContatos.getModel().getValueAt(carregar, 3).toString());
-        txtEndereco.setText(tbContatos.getModel().getValueAt(carregar, 4).toString());
-        txtBairro.setText(tbContatos.getModel().getValueAt(carregar, 5).toString());
-        txtCidade.setText(tbContatos.getModel().getValueAt(carregar, 6).toString());
-        txtCEP.setText(tbContatos.getModel().getValueAt(carregar, 7).toString());
-    }
-
-    private void dadosRegistrados() {
-        String sql = "select id_contato, nome_contato as Nome, telefone as Contato, email as Email, endereco as Endereco, bairro as Bairro, cidade as Cidade, uf as UF, sexo as Sexo, cep as CEP from usuarios";
-        try {
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
-            tbContatos.setModel(DbUtils.resultSetToTableModel(rs));
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }
 
     private void alterarDados() {
-        String sql = "update contatos set nome_contato=?, telefone=?, email=?, endereco=?, bairro=?, cidade=?, uf=?, sexo=?, cep=? where id_contato = ?";
+        String sql = "update contatos set nome_contato=?, telefone_contato=?, email_contato=?, sexo=?, endereco=?, bairro=?, cidade=?,cep=?, uf=? where id_contato = ?";
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, txtNome.getText());
             ps.setString(2, txtTelefone.getText());
             ps.setString(3, txtEmail.getText());
-             ps.setString(4, txtEndereco.getText());
-              ps.setString(5, txtBairro.getText());
-               ps.setString(6, txtCidade.getText());
-               ps.setString(7, txtCEP.getText());
-            ps.setString(8, cmbSexo.getSelectedItem();
-            ps.setString(9, cmbUF.getSelectedItem());
+             ps.setString(4, cmbSexo.getSelectedItem().toString());
+             ps.setString(5, txtEndereco.getText());
+              ps.setString(6, txtBairro.getText());
+               ps.setString(7, txtCidade.getText());
+               ps.setString(8, txtCEP.getText());
+              ps.setString(9, cmbUF.getSelectedItem().toString());
+            ps.setString(10, txtID.getText());
+         
 
             int adicionado = ps.executeUpdate();
 
@@ -147,16 +126,14 @@ public class frm_CadastroContatos extends javax.swing.JFrame {
         txtID.setText(null);
         txtNome.setText(null);
         txtTelefone.setText(null);
-        txtNome.setText(null);
-        txtTelefone.setText(null);
         txtEmail.setText(null);
+        cmbSexo.setSelectedItem(-1);
         txtEndereco.setText(null);
         txtBairro.setText(null);
         txtCidade.setText(null);
         txtCEP.setText(null);
-        cmbSexo.setSelectedItem(null);
-        cmbUF.setSelectedItem(null);
-        ((DefaultTableModel) tbContatos.getModel()).setRowCount(0);
+        cmbUF.setSelectedItem(-1);
+      
     }
 
     /**
@@ -193,14 +170,13 @@ public class frm_CadastroContatos extends javax.swing.JFrame {
         btnRemover = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnProcurar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tbContatos = new javax.swing.JTable();
         txtCEP = new javax.swing.JFormattedTextField();
 
         jScrollPane2.setViewportView(jEditorPane1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cdastro de Contatos");
+        setTitle("Cadastro de Contatos");
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/senac/icones/logo.png")).getImage());
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -212,19 +188,21 @@ public class frm_CadastroContatos extends javax.swing.JFrame {
 
         txtID.setEditable(false);
 
-        jLabel2.setText("Nome");
+        jLabel2.setText("Nome*");
 
-        jLabel3.setText("Telefone");
+        jLabel3.setText("Telefone*");
 
         try {
-            txtTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) # ####-####")));
+            txtTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)# ####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
 
-        jLabel4.setText("E-mail:");
+        jLabel4.setText("E-mail:*");
 
         jLabel5.setText("Sexo");
+
+        cmbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Feminino", "Masculino" }));
 
         jLabel6.setText("Endereço:");
 
@@ -241,6 +219,8 @@ public class frm_CadastroContatos extends javax.swing.JFrame {
         jLabel9.setText("CEP");
 
         jLabel10.setText("UF");
+
+        cmbUF.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AC", "AM", "RR", "PA", "AP", "TO", "MA", "PI", "CE", "RN", "PB", "PE", "AL", "SE", "BA", "MG", "ES", "RJ", "SP", "PR", "SC", "RS", "MS", "MT", "GO", "DF" }));
 
         btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/senac/icones/add.png"))); // NOI18N
         btnNovo.addActionListener(new java.awt.event.ActionListener() {
@@ -264,33 +244,11 @@ public class frm_CadastroContatos extends javax.swing.JFrame {
         });
 
         btnProcurar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/senac/icones/search.png"))); // NOI18N
-
-        tbContatos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "Nome"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+        btnProcurar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProcurarActionPerformed(evt);
             }
         });
-        tbContatos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbContatosMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tbContatos);
-        if (tbContatos.getColumnModel().getColumnCount() > 0) {
-            tbContatos.getColumnModel().getColumn(0).setResizable(false);
-            tbContatos.getColumnModel().getColumn(1).setResizable(false);
-        }
 
         try {
             txtCEP.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####-###")));
@@ -344,10 +302,9 @@ public class frm_CadastroContatos extends javax.swing.JFrame {
                                 .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnProcurar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addContainerGap(32, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -364,7 +321,7 @@ public class frm_CadastroContatos extends javax.swing.JFrame {
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(20, Short.MAX_VALUE))))
+                        .addContainerGap(32, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -394,18 +351,17 @@ public class frm_CadastroContatos extends javax.swing.JFrame {
                     .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel10)
-                    .addComponent(cmbUF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnNovo)
-                    .addComponent(btnRemover)
-                    .addComponent(btnEditar)
                     .addComponent(btnProcurar)
-                    .addComponent(txtCEP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel9)
+                        .addComponent(jLabel10)
+                        .addComponent(cmbUF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnRemover)
+                        .addComponent(btnEditar)
+                        .addComponent(txtCEP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -421,7 +377,7 @@ public class frm_CadastroContatos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-     dadosRegistrados();
+
     }//GEN-LAST:event_formWindowOpened
 
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
@@ -432,9 +388,11 @@ public class frm_CadastroContatos extends javax.swing.JFrame {
         alterarDados();
     }//GEN-LAST:event_btnEditarActionPerformed
 
-    private void tbContatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbContatosMouseClicked
-       carregaCampos();
-    }//GEN-LAST:event_tbContatosMouseClicked
+    private void btnProcurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcurarActionPerformed
+      frm_Pesquisar pesquisa = new frm_Pesquisar();
+      pesquisa.setVisible(true);
+      this.dispose();
+    }//GEN-LAST:event_btnProcurarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -476,8 +434,8 @@ public class frm_CadastroContatos extends javax.swing.JFrame {
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnProcurar;
     private javax.swing.JButton btnRemover;
-    private javax.swing.JComboBox<String> cmbSexo;
-    private javax.swing.JComboBox<String> cmbUF;
+    public javax.swing.JComboBox<String> cmbSexo;
+    public javax.swing.JComboBox<String> cmbUF;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -489,16 +447,14 @@ public class frm_CadastroContatos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable tbContatos;
-    private javax.swing.JTextField txtBairro;
-    private javax.swing.JFormattedTextField txtCEP;
-    private javax.swing.JTextField txtCidade;
-    private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtEndereco;
-    private javax.swing.JTextField txtID;
-    private javax.swing.JTextField txtNome;
-    private javax.swing.JFormattedTextField txtTelefone;
+    public javax.swing.JTextField txtBairro;
+    public javax.swing.JFormattedTextField txtCEP;
+    public javax.swing.JTextField txtCidade;
+    public javax.swing.JTextField txtEmail;
+    public javax.swing.JTextField txtEndereco;
+    public javax.swing.JTextField txtID;
+    public javax.swing.JTextField txtNome;
+    public javax.swing.JFormattedTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
 }

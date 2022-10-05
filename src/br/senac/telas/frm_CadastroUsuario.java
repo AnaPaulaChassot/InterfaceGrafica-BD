@@ -105,6 +105,7 @@ public class frm_CadastroUsuario extends javax.swing.JFrame {
             if (adicionado > 0) {
                 JOptionPane.showMessageDialog(null, "Usuário alterado com sucesso!");
                 limpar();
+                btnInserir.setEnabled(true);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
@@ -173,7 +174,7 @@ public class frm_CadastroUsuario extends javax.swing.JFrame {
         txtBusca = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Usuários");
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/senac/icones/logo.png")).getImage());
         setResizable(false);
@@ -217,6 +218,11 @@ public class frm_CadastroUsuario extends javax.swing.JFrame {
             }
         });
 
+        tbLista = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex){
+                return(false);
+            }
+        };
         tbLista.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -233,6 +239,8 @@ public class frm_CadastroUsuario extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tbLista.setFocusable(false);
+        tbLista.getTableHeader().setReorderingAllowed(false);
         tbLista.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbListaMouseClicked(evt);
@@ -380,10 +388,15 @@ public class frm_CadastroUsuario extends javax.swing.JFrame {
 
     private void tbListaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbListaMouseClicked
         carregaCampos();
+        btnInserir.setEnabled(false);
+          btnRemover.setEnabled(true);
+        btnAlterar.setEnabled(true);
     }//GEN-LAST:event_tbListaMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         dadosRegistrados();
+        btnRemover.setEnabled(false);
+        btnAlterar.setEnabled(false);
     }//GEN-LAST:event_formWindowOpened
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
