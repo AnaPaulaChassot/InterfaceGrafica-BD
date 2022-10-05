@@ -5,10 +5,10 @@
         <group>
             <file>file:/C:/Users/anapc/Documents/NetBeansProjects/InterfaceGrafica_BD/src/br/senac/telas/frm_CadastroUsuario.java</file>
             <file>file:/C:/Users/anapc/Documents/NetBeansProjects/InterfaceGrafica_BD/src/br/senac/conexaoBD/conexao.java</file>
-            <file>file:/C:/Users/anapc/Documents/NetBeansProjects/InterfaceGrafica_BD/src/lista/lista.java</file>
             <file>file:/C:/Users/anapc/Documents/NetBeansProjects/InterfaceGrafica_BD/src/br/senac/telas/frm_Principal.java</file>
             <file>file:/C:/Users/anapc/Documents/NetBeansProjects/InterfaceGrafica_BD/src/br/senac/telas/frm_CadastroContatos.java</file>
-            <file>file:/C:/Users/anapc/Documents/NetBeansProjects/InterfaceGrafica_BD/src/br/senac/icones/add.png</file>
+            <file>file:/C:/Users/anapc/Documents/NetBeansProjects/InterfaceGrafica_BD/src/br/senac/telas/frm_Login.java</file>
+            <file>file:/C:/Users/anapc/Documents/NetBeansProjects/InterfaceGrafica_BD/src/br/senac/telas/frm_Pesquisar.java</file>
         </group>
     </open-files>
 </project-private>
